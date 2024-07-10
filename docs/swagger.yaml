@@ -1,0 +1,250 @@
+basePath: /
+definitions:
+  auth.AuthResDto:
+    properties:
+      tokens:
+        $ref: '#/definitions/auth.TokenResDto'
+      user:
+        $ref: '#/definitions/auth.UserResDto'
+    type: object
+  auth.LoginReqDto:
+    properties:
+      email:
+        type: string
+      password:
+        minLength: 8
+        type: string
+    required:
+    - email
+    - password
+    type: object
+  auth.RegisterReqDto:
+    properties:
+      email:
+        type: string
+      fullName:
+        type: string
+      password:
+        minLength: 8
+        type: string
+    required:
+    - email
+    - fullName
+    - password
+    type: object
+  auth.TokenResDto:
+    properties:
+      accessToken:
+        type: string
+      refreshToken:
+        type: string
+    type: object
+  auth.UserResDto:
+    properties:
+      email:
+        type: string
+      fullName:
+        type: string
+      id:
+        type: string
+    type: object
+  constants.Order:
+    enum:
+    - ASC
+    - DESC
+    type: string
+    x-enum-varnames:
+    - ASC
+    - DESC
+  exception.ErrorDetail:
+    properties:
+      field:
+        type: string
+      issue:
+        type: string
+      issueId:
+        type: string
+    type: object
+  exception.HttpError:
+    properties:
+      details:
+        items:
+          $ref: '#/definitions/exception.ErrorDetail'
+        type: array
+      message:
+        type: string
+      requestId:
+        type: string
+    type: object
+host: localhost:3000
+info:
+  contact:
+    email: support@swagger.io
+    name: API Support
+    url: http://www.swagger.io/support
+  description: Golang Gin Boilerplate.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: Swagger UI
+  version: "1.0"
+paths:
+  /auth/refresh-token:
+    get:
+      description: Refresh Token
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/auth.TokenResDto'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/exception.HttpError'
+      security:
+      - BearerAuth: []
+      summary: Refresh Token
+      tags:
+      - Auth
+  /auth/sign-in:
+    post:
+      consumes:
+      - application/json
+      description: User login
+      parameters:
+      - description: Login request
+        in: body
+        name: loginReq
+        required: true
+        schema:
+          $ref: '#/definitions/auth.LoginReqDto'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/auth.AuthResDto'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/exception.HttpError'
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/exception.HttpError'
+      summary: Login
+      tags:
+      - Auth
+  /auth/sign-up:
+    post:
+      consumes:
+      - application/json
+      description: User Register
+      parameters:
+      - description: Register request
+        in: body
+        name: registerReq
+        required: true
+        schema:
+          $ref: '#/definitions/auth.RegisterReqDto'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/auth.AuthResDto'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/exception.HttpError'
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/exception.HttpError'
+      summary: Register
+      tags:
+      - Auth
+  /users:
+    get:
+      description: Get all users
+      parameters:
+      - in: query
+        maximum: 50
+        minimum: 1
+        name: limit
+        type: integer
+      - in: query
+        minimum: 0
+        name: offset
+        type: integer
+      - enum:
+        - ASC
+        - DESC
+        in: query
+        name: order
+        type: string
+        x-enum-varnames:
+        - ASC
+        - DESC
+      - in: query
+        name: order_field
+        type: string
+      - in: query
+        name: q
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/auth.UserResDto'
+            type: array
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/exception.HttpError'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/exception.HttpError'
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/exception.HttpError'
+      security:
+      - BearerAuth: []
+      summary: Get all users
+      tags:
+      - User
+  /users/me:
+    get:
+      description: Get me
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/auth.UserResDto'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/exception.HttpError'
+      security:
+      - BearerAuth: []
+      summary: Get me
+      tags:
+      - User
+securityDefinitions:
+  BearerAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"
