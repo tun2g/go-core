@@ -5,9 +5,9 @@ import (
 
 	authService "app/src/apis/auth/services"
 	userModel "app/src/apis/user/models"
-	"app/src/shared/exception"
 	httpContext "app/src/shared/http-context"
-
+	sharedConstants "app/src/shared/constants"
+	"app/src/shared/utils"
 	dto "app/src/apis/auth/dtos"
 )
 
@@ -22,15 +22,11 @@ func NewAuthController(authService authService.IAuthService) *AuthController {
 }
 
 func (ctl *AuthController) Login(ctx *httpContext.CustomContext) {
-	var reqDto dto.LoginReqDto
 	var err error
 	var user *userModel.User
 	var tokens *dto.TokenResDto
 
-	if err := ctx.ShouldBindJSON(&reqDto); err != nil {
-		ctx.Error(exception.NewUnprocessableEntityException(ctx.GetRequestId(), err))
-		return
-	}
+	reqDto := utils.GetValidation[dto.LoginReqDto](ctx, sharedConstants.BODY)
 
 	user, tokens, err = ctl.authService.Login(reqDto, ctx)
 	if err != nil {
@@ -53,15 +49,11 @@ func (ctl *AuthController) Login(ctx *httpContext.CustomContext) {
 }
 
 func (ctl *AuthController) Register(ctx *httpContext.CustomContext) {
-	var reqDto dto.RegisterReqDto
 	var err error
 	var user *userModel.User
 	var tokens *dto.TokenResDto
 
-	if err := ctx.ShouldBindJSON(&reqDto); err != nil {
-		ctx.Error(exception.NewUnprocessableEntityException(ctx.GetRequestId(), err))
-		return
-	}
+	reqDto := utils.GetValidation[dto.RegisterReqDto](ctx, sharedConstants.BODY)
 
 	user, tokens, err = ctl.authService.Register(reqDto, ctx)
 

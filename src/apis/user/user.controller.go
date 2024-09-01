@@ -1,11 +1,13 @@
 package user
 
 import (
-	"net/http"
-	"app/src/shared/exception"
 	userService "app/src/apis/user/services"
-	httpContext "app/src/shared/http-context"
 	pageDto "app/src/shared/dto"
+	"app/src/shared/exception"
+	httpContext "app/src/shared/http-context"
+	sharedConstants "app/src/shared/constants"
+	"app/src/shared/utils"
+	"net/http"
 )
 
 type UserController struct {
@@ -32,14 +34,10 @@ func (ctl *UserController) GetMe(ctx *httpContext.CustomContext) {
 }
 
 func (ctl *UserController) GetUsers(ctx *httpContext.CustomContext) {
-	var queryDto pageDto.PageOptionsDto
-	if err := ctx.ShouldBindQuery(&queryDto); err != nil {
-		ctx.Error(exception.NewUnprocessableEntityException(ctx.GetRequestId(), err))
-		return
-	}
-
-	queryDto = *pageDto.NewPageOptionsDto(&queryDto);
-	data, err := ctl.userService.GetUsers(ctx, &queryDto);
+	queryDto := utils.GetValidation[pageDto.PageOptionsDto](ctx, sharedConstants.QUERY)
+	
+	queryDto = pageDto.NewPageOptionsDto(queryDto);
+	data, err := ctl.userService.GetUsers(ctx, queryDto);
 
 	if(err!=nil){
 		ctx.Error(err)

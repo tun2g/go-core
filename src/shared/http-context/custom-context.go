@@ -3,7 +3,8 @@ package httpContext
 import (
 	"app/src/shared/dto"
 	httpContextConstants "app/src/shared/http-context/constants"
-
+	"fmt"
+	"app/src/shared/constants"
 	"github.com/gin-gonic/gin"
 )
 type CustomContext struct {
@@ -44,3 +45,6 @@ func (ctx *CustomContext) GetIsPublicRoute() bool{
 	return isPublic
 }
 
+func (ctx *CustomContext) SetValidation(data interface{}, valType constants.ValidationType){
+	ctx.Set(fmt.Sprintf("%d", valType), data)
+}

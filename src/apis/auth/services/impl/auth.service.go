@@ -37,7 +37,7 @@ func NewAuthService(
 }
 
 func (srv *AuthService) Login(
-	dto authDto.LoginReqDto,
+	dto *authDto.LoginReqDto,
 	ctx *httpContext.CustomContext,
 ) (*userModel.User, *authDto.TokenResDto, error) {
 	var err error
@@ -80,7 +80,7 @@ func (srv *AuthService) Login(
 }
 
 func (srv *AuthService) Register(
-	dto authDto.RegisterReqDto,
+	dto *authDto.RegisterReqDto,
 	ctx *httpContext.CustomContext,
 ) (*userModel.User, *authDto.TokenResDto, error) {
 	var err error
