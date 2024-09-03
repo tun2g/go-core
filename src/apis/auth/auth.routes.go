@@ -12,7 +12,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func (authController *AuthController) InitRoute(
+func (authController *AuthController) InitRouteV1(
 	routes *gin.RouterGroup,
 	jwtAccessTokenManager *jwt.JWTManager,
 	jwtRefreshTokenManager *jwt.JWTManager,

@@ -24,7 +24,7 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/auth/refresh-token": {
+        "/api/v1/auth/refresh-token": {
             "get": {
                 "security": [
                     {
@@ -55,7 +55,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/auth/sign-in": {
+        "/api/v1/auth/sign-in": {
             "post": {
                 "description": "User login",
                 "consumes": [
@@ -101,7 +101,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/auth/sign-up": {
+        "/api/v1/auth/sign-up": {
             "post": {
                 "description": "User Register",
                 "consumes": [
@@ -147,7 +147,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/users": {
+        "/api/v1/users": {
             "get": {
                 "security": [
                     {
@@ -231,7 +231,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/users/me": {
+        "/api/v1/users/me": {
             "get": {
                 "security": [
                     {

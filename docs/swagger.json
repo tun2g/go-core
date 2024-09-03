@@ -18,7 +18,7 @@
     "host": "localhost:3000",
     "basePath": "/",
     "paths": {
-        "/auth/refresh-token": {
+        "/api/v1/auth/refresh-token": {
             "get": {
                 "security": [
                     {
@@ -49,7 +49,7 @@
                 }
             }
         },
-        "/auth/sign-in": {
+        "/api/v1/auth/sign-in": {
             "post": {
                 "description": "User login",
                 "consumes": [
@@ -95,7 +95,7 @@
                 }
             }
         },
-        "/auth/sign-up": {
+        "/api/v1/auth/sign-up": {
             "post": {
                 "description": "User Register",
                 "consumes": [
@@ -141,7 +141,7 @@
                 }
             }
         },
-        "/users": {
+        "/api/v1/users": {
             "get": {
                 "security": [
                     {
@@ -225,7 +225,7 @@
                 }
             }
         },
-        "/users/me": {
+        "/api/v1/users/me": {
             "get": {
                 "security": [
                     {

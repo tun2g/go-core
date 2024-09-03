@@ -90,7 +90,7 @@ info:
   title: Swagger UI
   version: "1.0"
 paths:
-  /auth/refresh-token:
+  /api/v1/auth/refresh-token:
     get:
       description: Refresh Token
       produces:
@@ -109,7 +109,7 @@ paths:
       summary: Refresh Token
       tags:
       - Auth
-  /auth/sign-in:
+  /api/v1/auth/sign-in:
     post:
       consumes:
       - application/json
@@ -139,7 +139,7 @@ paths:
       summary: Login
       tags:
       - Auth
-  /auth/sign-up:
+  /api/v1/auth/sign-up:
     post:
       consumes:
       - application/json
@@ -169,7 +169,7 @@ paths:
       summary: Register
       tags:
       - Auth
-  /users:
+  /api/v1/users:
     get:
       description: Get all users
       parameters:
@@ -223,7 +223,7 @@ paths:
       summary: Get all users
       tags:
       - User
-  /users/me:
+  /api/v1/users/me:
     get:
       description: Get me
       produces:

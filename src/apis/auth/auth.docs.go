@@ -18,7 +18,7 @@ func initException(_ exception.HttpError) {}
 // @Success 200 {object} authDto.AuthResDto
 // @Failure 422 {object} exception.HttpError
 // @Failure 400 {object} exception.HttpError
-// @Router /auth/sign-in [post]
+// @Router /api/v1/auth/sign-in [post]
 func login(ctx *httpContext.CustomContext) {}
 
 // @Summary Register
@@ -30,7 +30,7 @@ func login(ctx *httpContext.CustomContext) {}
 // @Success 201 {object} authDto.AuthResDto
 // @Failure 422 {object} exception.HttpError
 // @Failure 400 {object} exception.HttpError
-// @Router /auth/sign-up [post]
+// @Router /api/v1/auth/sign-up [post]
 func register(ctx *httpContext.CustomContext) {}
 
 // @Summary Refresh Token
@@ -40,5 +40,5 @@ func register(ctx *httpContext.CustomContext) {}
 // @Security BearerAuth
 // @Success 200 {object} authDto.TokenResDto
 // @Failure 401 {object} exception.HttpError
-// @Router /auth/refresh-token [get]
+// @Router /api/v1/auth/refresh-token [get]
 func refreshToken(ctx *httpContext.CustomContext) {}

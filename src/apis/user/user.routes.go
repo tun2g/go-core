@@ -14,7 +14,7 @@ import (
 
 )
 
-func (userController *UserController) InitRoute(
+func (userController *UserController) InitRouteV1(
 	routes *gin.RouterGroup,
 	jwtAccessTokenManager *jwt.JWTManager,
 ) {

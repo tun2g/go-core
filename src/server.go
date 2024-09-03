@@ -45,6 +45,7 @@ func NewServer(dbConnection *gorm.DB, config config.Config) (*Server, error) {
 
 	if config.SwaggerEnabled {
 		route.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+		_logger.Printf("Swagger enabled on http://127.0.0.1:%d/swagger/index.html\n", config.AppPort)
 	}
 
 	server := &Server{

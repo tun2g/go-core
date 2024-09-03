@@ -46,11 +46,14 @@ func (server *Server) launchingServer(route *gin.Engine) {
 	)
 
 	// Controller
-	var _authController = authController.NewAuthController(_authService)
-	authRoutes := route.Group("/auth")
-	_authController.InitRoute(authRoutes, &jwtAccessTokenManager, &jwtRefreshTokenManager)
-
-	var _userController = userController.NewUserController(_userService)
-	userRoutes := route.Group("/users")
-	_userController.InitRoute(userRoutes, &jwtAccessTokenManager)
+	v1 := route.Group("/api/v1")
+	{
+		var _authController = authController.NewAuthController(_authService)
+		authRoutes := v1.Group("/auth")
+		_authController.InitRouteV1(authRoutes, &jwtAccessTokenManager, &jwtRefreshTokenManager)
+	
+		var _userController = userController.NewUserController(_userService)
+		userRoutes := v1.Group("/users")
+		_userController.InitRouteV1(userRoutes, &jwtAccessTokenManager)
+	}
 }

@@ -20,7 +20,7 @@ func initAuthDto(_ authDto.UserResDto)     {}
 // @Security BearerAuth
 // @Success 200 {object} authDto.UserResDto
 // @Failure 401 {object} exception.HttpError
-// @Router /users/me [get]
+// @Router /api/v1/users/me [get]
 func getMe(ctx *httpContext.CustomContext) {}
 
 // @Summary Get all users
@@ -33,5 +33,5 @@ func getMe(ctx *httpContext.CustomContext) {}
 // @Failure 422 {object} exception.HttpError
 // @Failure 401 {object} exception.HttpError
 // @Failure 403 {object} exception.HttpError
-// @Router /users [get]
+// @Router /api/v1/users [get]
 func getUsers(ctx *httpContext.CustomContext) {}
