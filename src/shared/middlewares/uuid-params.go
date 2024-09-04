@@ -1,30 +1,13 @@
-package utils
+package middlewares
 
 import (
 	"errors"
-	"app/src/lib/logger"
 	"app/src/shared/exception"
 	httpContext "app/src/shared/http-context"
 	"sync"
 
-	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
 )
-
-var _logger = logger.NewLogger("utils")
-
-func CombineMiddlewares(middlewares ...gin.HandlerFunc) gin.HandlerFunc {
-	return func(ctx *gin.Context) {
-		for _, middleware := range middlewares {
-			if middleware != nil {
-				middleware(ctx)
-				if ctx.IsAborted() {
-					return
-				}
-			}
-		}
-	}
-}
 
 func UUIDParamsMiddleware(fields ...string) func(ctx *httpContext.CustomContext) {
 	if len(fields) == 0 {
