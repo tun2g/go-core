@@ -1,7 +1,8 @@
 package config
 
 import (
-	"github.com/rs/zerolog/log"
+	"app/src/lib/logger"
+
 	"github.com/spf13/viper"
 )
 
@@ -33,6 +34,8 @@ type Config struct {
 	RedisBrokerUrl string `mapstructure:"REDIS_BROKER_URL"`
 }
 
+var log = logger.NewLogger("Configuration")
+
 func loadConfiguration(path string) (config Config) {
 	viper.AddConfigPath(path)
 	viper.SetConfigName(".env")
@@ -42,12 +45,12 @@ func loadConfiguration(path string) (config Config) {
 
 	err := viper.ReadInConfig()
 	if err != nil {
-		log.Fatal().Err(err).Msg("Load config failed")
+		log.Error("Load config failed")
 	}
 
 	err = viper.Unmarshal(&config)
 	if err != nil {
-		log.Fatal().Err(err).Msg("Load config failed")
+		log.Error("Load config failed")
 	}
 
 	return config
